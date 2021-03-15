@@ -1,0 +1,13 @@
+# Ignore model folder
+trained/*
+
+# Ignore model pickle file
+*.pt
+**/*.pt
+
+# Ignore checkpoints
+.ipynb_checkpoints
+
+# Python files
+*.pyo
+*.pyc
