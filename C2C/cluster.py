@@ -10,6 +10,7 @@ from C2C.models.resnet import PatchClassifier, Enc
 from C2C.dataloader import *
 
 
+
 def get_representation(dl, enc):
     """
     Computes representation of patches of a WSI 
