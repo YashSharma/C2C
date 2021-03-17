@@ -1,31 +1,3 @@
-import torch
-import torchvision
-import numpy as np
-import torch.nn as nn
-import torch.optim as optim
-from torch.optim import lr_scheduler
-from torchvision import datasets, models, transforms
-from torch.utils.data import Dataset, DataLoader
-import matplotlib.pyplot as plt
-import skimage.io as io
-
-import os
-import cv2
-import copy
-import umap
-import random
-import pandas as pd
-from tqdm import tqdm
-import openslide as opsl
-import torch.nn.functional as F
-from sklearn.cluster import KMeans
-from sklearn.metrics.cluster import normalized_mutual_info_score
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import normalize
-
-import albumentations
-from albumentations.pytorch import ToTensorV2, ToTensor
-
 NUM_CLUSTER = 8
 NUM_IMG_PER_CLUSTER = 8
 CLUSTER_BATCH_SIZE = 128 
