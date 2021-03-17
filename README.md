@@ -40,6 +40,7 @@ C2C/
 
 ```
 `dataloader.py`: Contain the WSI dataloader for reading patches and WSI cluster dataloader for reading cluster based sampled patches from a WSI. 
+
 `train.py`: Contains the training function with flexible alpha, beta, and gamma parameters for weighting WSI loss, patch loss, and KL-divergence loss for model training with variable number of clusters and number of images per cluster.
 `cluster.py`: Contain function for running WSI clustering.
 `loss.py`: KL-divergence loss for computing KLD between cluster attention distribution and uniform distribution.
