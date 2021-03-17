@@ -17,6 +17,8 @@ In recent years, the availability of digitized Whole Slide Images (WSIs) has ena
 
 ## Installation
 
+
+
 ## How to Use
 
 Use the main.ipynb notebook for experimenting and orchestrating the training. It can be easily modified to python script for scalable training. The train funciton in the notebook requires an input file containing a csv file with following columns:
@@ -37,3 +39,8 @@ C2C/
    ├── loss.py
    ├── eval_model.py
    ├── utils.py
+```
+
+## Reference
+
+Under review at MIDL: https://openreview.net/forum?id=7i1-2oKIELU
