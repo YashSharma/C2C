@@ -116,6 +116,7 @@ def eval_test(model, df, data_transforms):
     if 'label' in df.columns:
         test_images_label = dict(df.groupby('wsi')['label'].apply(max))    
         pred_df['actual'] = pred_df['wsi'].apply(lambda x: test_images_label[x])
-        print('Test Accuracy: ', sum(pred_df['actual']==pred_df['prediction'])/pred_df.shape[0])            
+        pred_wsi_df = pred_df[['wsi', 'prediction', 'actual']].drop_duplicates()
+        print('Test Accuracy: ', sum(pred_wsi_df['actual']==pred_wsi_df['prediction'])/pred_wsi_df.shape[0])            
         
     return pred_df

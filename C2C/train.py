@@ -12,8 +12,8 @@ from C2C.eval_model import *
 from C2C.utils import *
 from C2C.cluster import run_clustering
 
-def train_model(model, criterion_dic, optimizer, df, data_transforms, num_cluster=8, num_img_per_cluster=8,
-                use_kld=True, num_epochs=25, fpath='checkpoint.pt'):
+def train_model(model, criterion_dic, optimizer, df, data_transforms, alpha=1., beta=0.01, gamma=0.01,
+                num_cluster=8, num_img_per_cluster=8, num_epochs=25, fpath='checkpoint.pt'):
     """ Function for training
     """
     
@@ -83,9 +83,8 @@ def train_model(model, criterion_dic, optimizer, df, data_transforms, num_cluste
             # Iterate over data.
             for i, (inputs, labels, inputs_cluster) in enumerate(dataloaders[phase]):
                 
-                if torch.cuda.is_available():
-                    inputs = inputs.cuda()
-                    labels = labels.cuda()
+                inputs = inputs.cuda()
+                labels = labels.cuda()
 
                 # zero the parameter gradients
                 optimizer.zero_grad()
@@ -105,10 +104,7 @@ def train_model(model, criterion_dic, optimizer, df, data_transforms, num_cluste
                     loss_kld = criterion_kld(outputs_attn, np.array(inputs_cluster))
                     
                     # Loss
-                    if use_kld:
-                        loss = loss_wsi + 0.01*loss_patch + 0.01*loss_kld
-                    else:
-                        loss = loss_wsi + 0.01*loss_patch
+                    loss = alpha*loss_wsi + beta*loss_patch + gamma*loss_kld
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
