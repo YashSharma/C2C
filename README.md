@@ -33,13 +33,13 @@ The main funciton requires an input file containing a csv file with following co
 
 ```bash
 C2C/
-	├── models
-            ├─── resnet.py
-	├── dataloader.py
-    ├── train.py
-    ├── cluster.py
-    ├── loss.py
-    ├── eval_model.py
-    ├── utils.py
+   ├── models
+         ├─── resnet.py
+   ├── dataloader.py
+   ├── train.py
+   ├── cluster.py
+   ├── loss.py
+   ├── eval_model.py
+   ├── utils.py
 
 ```
