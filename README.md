@@ -7,7 +7,7 @@ Implementation of Cluster-to-Conquer: A Framework for End-to-End Multi-Instance 
 - Attention-based aggregation for slide-level prediction
 - Inclusion of KL-divergence in the loss for regularizing the intra-cluster variance
     
-<img src="docs/FlowChart_MIDL.png" width="500px" align="center" />
+<img src="docs/FlowChart_MIDL.png" width="700px" align="center" />
     
 ### Abstract
 
