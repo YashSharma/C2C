@@ -119,7 +119,7 @@ def train_model(model, criterion_dic, optimizer, df, data_transforms, alpha=1., 
                 try:
                     running_loss_kld += loss_kld.item() * len(inputs)
                 except:
-                    print('No KLD for cluster with 1 patch')
+                    print('No KLD for a WSI')
                             
             epoch_loss_wsi = running_loss_wsi / dataset_sizes[phase]
             epoch_loss_patch = running_loss_patch / dataset_sizes[phase]

@@ -11,7 +11,7 @@ from C2C.dataloader import *
 from C2C.models.resnet import *
 
 def eval_model(test_images, test_images_label, model, data_transforms):
-    """ Pass through all the patches in a WSI for validation prediction
+    """ Pass all the patches in a WSI for validation prediction
     """
     pred_list = []
     pred_fname = []
@@ -24,8 +24,8 @@ def eval_model(test_images, test_images_label, model, data_transforms):
             pred_list.append(t_pred)
             pred_fname.append(im)
 
-    pred_df = pd.DataFrame({'filename': pred_fname, 'prediction': pred_list})
-    pred_df['actual'] = pred_df['filename'].apply(lambda x: test_images_label[x])
+    pred_df = pd.DataFrame({'wsi': pred_fname, 'prediction': pred_list})
+    pred_df['actual'] = pred_df['wsi'].apply(lambda x: test_images_label[x])
 
     print('Test Accuracy: ', sum(pred_df['actual']==pred_df['prediction'])/pred_df.shape[0])            
     
@@ -50,7 +50,8 @@ def compute_attn_df(tdl, model, track_running_stats=True):
     enc_attn.eval()
     classifier_layer = model.classifier
     
-    # Perform WSI-Batch Normalization for validation, switch off only when transfer learning
+    # Perform WSI-Batch Normalization for validation, switch off when transfer learning 
+    # For batch size=1 - WSI normalization during testing phase works better
     if track_running_stats:
         for m in enc_attn.modules():
             if isinstance(m, nn.BatchNorm2d):

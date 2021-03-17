@@ -22,7 +22,7 @@ class KLDLoss(nn.Module):
         cluster = np.array(cluster)
         for cls in np.unique(cluster):
             index = np.where(cluster==cls)[0]
-            # HARD CODE
+            # HARD CODE - if number of images less than 4 in a cluster then skip
             if len(index)<=4:
                 continue            
             kld_loss += F.kl_div(F.log_softmax(attn_val[index], dim=0)[None],\

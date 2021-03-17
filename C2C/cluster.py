@@ -15,7 +15,7 @@ def get_representation(dl, enc):
     """
     Computes representation of patches of a WSI 
     
-    Args:
+    Parameters:
         - dataloader: dataloader for patches coming from a WSI
         - enc: encoder for generating the representation
     
@@ -23,7 +23,6 @@ def get_representation(dl, enc):
         - img_rep: contain list of representations for all the patches
         - path_list: contain path corresponding to representation of all the images for selective filtering in dataloader
     """
-    
     img_rep = np.array([])
     path_list = []
     for i, (input_image, input_image_path) in enumerate(dl):
@@ -38,7 +37,7 @@ def cluster_representation(im, num_cluster=8):
     """
     Cluster patches
 
-    Args:
+    Parameters:
         - im: contain a list of patch embedding and patch path
     
     Return:
@@ -48,12 +47,9 @@ def cluster_representation(im, num_cluster=8):
     """
     img_embedding, path_list = im[0], im[1]
     img_embedding = normalize(img_embedding).astype('float32')
-#     kmeans = faiss.Kmeans(img_embedding.shape[1], min(num_cluster, len(img_embedding)))
-#     kmeans.train(img_embedding)
-#     label_metric, label = kmeans.assign(img_embedding)    
-    kmeans = KMeans(n_clusters=min(num_cluster, len(img_embedding)), random_state=0).fit(img_embedding)
-    cls_cntr_distance = np.min(kmeans.transform(img_embedding), 1)
-    label_metric, label = cls_cntr_distance, kmeans.labels_
+    kmeans = faiss.Kmeans(img_embedding.shape[1], min(num_cluster, len(img_embedding)))
+    kmeans.train(img_embedding)
+    label_metric, label = kmeans.assign(img_embedding)    
     return label, label_metric, path_list    
 
 def select_topk(dl, enc):    
@@ -73,7 +69,7 @@ def select_topk(dl, enc):
     return img_rep, path_list
     
 def run_clustering(train_img_dic, valid_img_dic, model_base, data_transforms, num_cluster=8,
-                   for_validation=False, random_sample=False, topk=False):
+                   for_validation=False, topk=False):
     """
     Function for running clustering 
     """    
@@ -98,21 +94,14 @@ def run_clustering(train_img_dic, valid_img_dic, model_base, data_transforms, nu
     train_img_cls = {}
     with torch.no_grad():
         for im, im_list in tqdm(train_img_dic.items()):
-            if random_sample:
-                # Assign all patches to same cluster, dataloader randomly sample patch for training
-                train_img[im] = im_list
-                train_img_cls[im] = [0]*len(im_list)
-                continue
-                
             td = WSIDataloader(im_list, transform=data_transforms)
-            # BATCH SIZE hardcoded
             tdl = torch.utils.data.DataLoader(td, batch_size=128, shuffle=False)
             
             if topk:
                 # Use patch classifier to identify most probable diseased patches
                 img_rep, path_list = select_topk(tdl, enc)
                 cluster = np.ones(len(path_list))
-                # MAX NUM PATCHES = 64 hardcoded
+                # MAX NUM PATCHES = 64 HARDCODE
                 cluster[np.argsort(img_rep.flatten())[::-1][:64]] = 0
                 pl = path_list
             else:
