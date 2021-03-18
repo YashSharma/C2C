@@ -13,7 +13,7 @@ from C2C.utils import *
 from C2C.cluster import run_clustering
 
 def train_model(model, criterion_dic, optimizer, df, data_transforms, alpha=1., beta=0.01, gamma=0.01,
-                num_cluster=8, num_img_per_cluster=8, num_epochs=25, fpath='checkpoint.pt'):
+                num_cluster=8, num_img_per_cluster=8, num_epochs=25, fpath='checkpoint.pt', topk=False):
     """ Function for training
     """
     
@@ -32,6 +32,12 @@ def train_model(model, criterion_dic, optimizer, df, data_transforms, alpha=1., 
     train_images_label = dict(df.loc[df['is_valid']==0].groupby('wsi')['label'].apply(max))
     valid_images_label = dict(df.loc[df['is_valid']==1].groupby('wsi')['label'].apply(max))    
     
+    # If topk=True, change num_cluster=1, num_img_per_cluster=64, gamma=0
+    if topk:
+        num_cluster=1
+        num_img_per_cluster=64
+        gamma=0
+    
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
@@ -39,7 +45,7 @@ def train_model(model, criterion_dic, optimizer, df, data_transforms, alpha=1., 
         # Run Clustering
         train_images, train_images_cluster, valid_images, valid_images_cluster = \
                             run_clustering(train_images, valid_images, model, data_transforms=data_transforms,
-                                          num_cluster=num_cluster)    
+                                          num_cluster=num_cluster, topk=topk)    
 
         # Using mutual information to track cluster assignment change
         if epoch>0:
