@@ -42,10 +42,12 @@ C2C/
 
 If you find our work useful Please consider citing our paper:
 
+```bash
 @article{sharma2021cluster,
   title={Cluster-to-Conquer: A Framework for End-to-End Multi-Instance Learning for Whole Slide Image Classification},
   author={Sharma, Yash and Shrivastava, Aman and Ehsan, Lubaina and Moskaluk, Christopher A and Syed, Sana and Brown, Donald},
   year={2021}
 }
+```
 
 Under review at MIDL: https://openreview.net/forum?id=7i1-2oKIELU
