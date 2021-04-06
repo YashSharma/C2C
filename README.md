@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Implementation of Cluster-to-Conquer: A Framework for End-to-End Multi-Instance Learning for Whole Slide Image Classification approach. In this work, we propose an end-to-end framework with following features:
+Implementation of [Cluster-to-Conquer: A Framework for End-to-End Multi-Instance Learning for Whole Slide Image Classification approach](https://arxiv.org/abs/2103.10626). In this work, we propose an end-to-end framework with following features:
 - Cluster-based sampling for diverse patch selection from a WSI
 - Attention-based aggregation for slide-level prediction
 - Inclusion of KL-divergence in the loss for regularizing the intra-cluster variance
