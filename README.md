@@ -37,6 +37,10 @@ C2C/
    ├── utils.py
 ```
 
+## MIDL Video
+
+[![MIDL Video](https://img.youtube.com/vi/G-28G5nr8dg/hqdefault.jpg)](https://www.youtube.com/watch?v=G-28G5nr8dg)
+
 ## Reference
 
 
